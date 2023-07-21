@@ -1,7 +1,20 @@
 #headerStyle{
 // background-color: #16728a;
+// background-image: url("../../../public/tflbus.jpg");
+// background-repeat: no-repeat;
+// background-size: 100% 100%;
+// height: 100vh;
+.css-19kzrtu{
+    padding: unset;
+}
 .tabs{
     display: inline;
+    color: white;
+    .MuiTabs-fixed{
+    background-color: white;
+    
+
+    }
 }
 .tflLogo {
 
@@ -9,6 +22,7 @@
         max-width: 200px;
         height: auto;
         object-fit: contain;
+        display: inline;
     // }
 }
 .textfield{
