@@ -1,0 +1,29 @@
+#QrDownload{
+    width: 85%;
+    margin: auto;
+    margin-top: 10px;
+    position: relative;
+    padding-top: 20px;
+    .logo::before{
+content: '';
+        background-image: url('../../../public//Logo/travelbliss\ logo.png');
+        background-repeat: no-repeat;
+        background-position: center; 
+        background-size: contain;
+        opacity: 0.2; 
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.2;
+    }
+  
+    .start{
+        float: left;
+    }
+    .Arrival{float: right;}
+    .qrcode{
+        margin-top: 20px;
+    }
+}

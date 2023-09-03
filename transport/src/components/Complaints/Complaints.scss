@@ -1,0 +1,24 @@
+#complaints{
+        max-width: 1000px;
+        // margin-left: 16%;
+        margin: auto;
+        margin-top: 3%;
+        box-shadow: -1px 1px 27px -3px rgba(17,59,146,1);
+        // margin-top: 10%;
+        background-color: white;
+        // z-index: 999;
+        .heading{
+            float: left;
+    margin-left: 0px;
+    margin-bottom: 10px;
+        }
+        .details{
+            input{
+                height: 150px;
+            }
+        }
+        .submit{
+            margin-left: auto;
+            margin-right: 10px;
+        }
+    }

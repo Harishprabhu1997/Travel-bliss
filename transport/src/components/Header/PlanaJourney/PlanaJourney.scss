@@ -1,5 +1,27 @@
 #PlanaJourney{
+  
+    .cardStyle{
+        max-width: 500px;
+        margin-left: 36%;
+        margin-top: 3%;
+        box-shadow: -1px 1px 27px -3px rgba(17,59,146,1);
+        // margin-top: 10%;
+        background-color: white;
+        z-index: 999;
+    }
+    .cardCont{
+        background-color: white;
+    }
     .textFiled{
-        display: block;
+        input{
+
+            width: 300px;        }
+
+        margin-bottom: 3%;
+    }
+    .timeStyle{
+        width: 332px;
+        margin: auto;
+        margin-bottom: 3%;
     }
 }

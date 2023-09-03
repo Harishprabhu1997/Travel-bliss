@@ -1,0 +1,41 @@
+#Registration{
+    max-width: 50%;
+    margin: auto;
+    margin-top: 7%;
+    box-shadow: -1px 1px 27px -3px rgba(17, 59, 146, 1);
+    .firstName{
+        float: left;
+        width: 98%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .password{
+        float: left;
+        width: 49%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .registerButton{
+        margin-top: 10px;
+        // margin: auto;
+    }
+    .cardCont::before{
+        content: '';
+                background-image: url('../../../public//Logo/travelbliss\ logo.png');
+                max-width: 50%;
+                margin: auto;
+                height: 50%;
+                background-repeat: no-repeat;
+                background-position: center; 
+                background-size: contain;
+                opacity: 0.2; 
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                left: 0px;
+                opacity: 0.1;
+                object-fit: contain;
+            }
+          
+}
