@@ -1,5 +1,5 @@
 const db = require("../models");
-const profileDb = db.profile;
+const profileDb = db.journey;
 const ObjectId = require("mongoose").Types.ObjectId;
 
 // Retrieve all data from the database.
@@ -16,11 +16,11 @@ exports.get = (req, res) => {
 
 // Retrieve data from id from the database .
 exports.getById = (req, res) => {
-  if (!ObjectId.isValid(req.params.id)) {
-    return res.status(400).json({
-      error: "Given object id is not valid.",
-    });
-  }
+  // if (!ObjectId.isValid(req.params.id)) {
+  //   return res.status(400).json({
+  //     error: "Given object id is not valid.",
+  //   });
+  // }
   profileDb
     .findById({user_id:req.params.id})
     .then((data) => {

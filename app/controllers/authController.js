@@ -46,10 +46,7 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
       console.error("Error saving session:", err);
       res.status(400).json({ success: false });
     } else {
-      res.status(200) .json({
-        success: true,
-        message: "Loggedin",
-      });
+      res.status(200).send(user);
     }
   });
 });

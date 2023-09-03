@@ -4,7 +4,13 @@ module.exports = (mongoose) => {
       journey: {
         type: String,
       },
+      ref: {
+        type: String,
+      },
       user_id: {
+        type: String,
+      },
+      qrcode: {
         type: String,
       },
       Departure: {
@@ -23,26 +29,63 @@ module.exports = (mongoose) => {
           },
           cost: {
             type: String,
-          }
+          },
+          journey_legs: [{
+            details: {
+              type: String,
+            },
+            departurePoint: {
+              type: String,
+            },
+            scheduledTime: {
+              type: String,
+            },
+            duration: {
+              type: String,
+            },
+            mode: {
+              type: String,
+            }
+          }],
         },
       },
-      journey_legs: [{
-        departureTime: {
-          type: String,
+      Arrival: {
+        type: {
+          departureTime: {
+            type: String,
+          },
+          arrivalpoint: {
+            type: String,
+          },
+          startTime: {
+            type: String,
+          },
+          endTime: {
+            type: String,
+          },
+          cost: {
+            type: String,
+          },
+          journey_legs: [{
+            details: {
+              type: String,
+            },
+            departurePoint: {
+              type: String,
+            },
+            scheduledTime: {
+              type: String,
+            },
+            duration: {
+              type: String,
+            },
+            mode: {
+              type: String,
+            }
+          }],
         },
-        arrivalpoint: {
-          type: String,
-        },
-        startTime: {
-          type: String,
-        },
-        endTime: {
-          type: String,
-        },
-        cost: {
-          type: String,
-        }
-      }],
+      },
+     
     },
     { timestamps: true }
   );
