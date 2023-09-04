@@ -33,8 +33,11 @@ exports.profileGet = (req, res) => {
 };
 
 exports.loginUser = catchAsyncError(async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email }).select("+password");
+  const { username, password } = req.body;
+  console.log(req.body)
+  const user = await User.findOne({ username }).select("+password");
+  console.log(user)
+
   if (!user || !(await user.isValidPassword(password))) {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
