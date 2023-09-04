@@ -39,9 +39,9 @@ userSchema.method("toJSON", function () {
   return object;
 });
 
-userSchema.pre("save", async function (next) {
-  this.password = await bcrypt.hash(this.password, 10);
-});
+// userSchema.pre("save", async function (next) {
+//   this.password = await bcrypt.hash(this.password, 10);
+// });
 
 
 userSchema.methods.isValidPassword = async function (enteredPassword) {

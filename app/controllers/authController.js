@@ -33,8 +33,11 @@ exports.profileGet = (req, res) => {
 };
 
 exports.loginUser = catchAsyncError(async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email }).select("+password");
+  const { username, password } = req.body;
+  console.log(req.body)
+  const user = await User.findOne({ username }).select("+password");
+  console.log(user)
+
   if (!user || !(await user.isValidPassword(password))) {
     return next(new ErrorHandler("Invalid email or password", 401));
   }
@@ -46,10 +49,7 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
       console.error("Error saving session:", err);
       res.status(400).json({ success: false });
     } else {
-      res.status(200) .json({
-        success: true,
-        message: "Loggedin",
-      });
+      res.status(200).send(user);
     }
   });
 });
