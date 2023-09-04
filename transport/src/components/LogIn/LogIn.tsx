@@ -5,6 +5,8 @@ import './Login.scss';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { loginsetValue,loginVal } from './LoginValidation'
 import axios from 'axios';
+// import cookies from "js-cookie"; 
+ 
 function LogIn() {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
@@ -24,9 +26,14 @@ const [loginState,setLoginState] = React.useState(loginVal)
     axios.post('http://localhost:8080/api/auth/login', {
       username:loginState.userName,
       password:loginState.password
-    })
-    .then(function (response) {
-      console.log(response);
+    }) 
+    // .then((response:any) => response.json())
+    .then(function (response:any) {
+      console.log(response.data.id);
+      // cookies.set("userId", response.data.id, { sameSite: "none", secure: true });
+      localStorage.setItem("userDetail", JSON.stringify(response.data.id))
+
+      navigate('/Plan_a_journey')
     })
     .catch(function (error) {
       console.log(error);

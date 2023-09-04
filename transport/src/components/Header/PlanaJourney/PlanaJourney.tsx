@@ -12,10 +12,10 @@ import Autocomplete from '@mui/material/Autocomplete';
 import moment from 'moment';
 import dayjs from 'dayjs';
 import { primary_key, base_url, modes, app_id } from "../../Api";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 function PlanaJourney() {
-
+const loc = useLocation();
   const [data, setValue] = React.useState({
     from: {},
     fromFullData: [],
@@ -56,7 +56,8 @@ function PlanaJourney() {
         navigate('/journey_result', {
           state: {
             json: json,
-            data: data
+            data: data,
+            // user_id:loc.state.udser_id
           }
         })
       })
