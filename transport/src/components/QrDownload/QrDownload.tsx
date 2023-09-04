@@ -4,15 +4,22 @@ import QRCode from "react-qr-code";
 import uniqid from 'uniqid';
 import Ticket from '../CommonFile/Ticket'
 import './QrDownload.scss'
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 const QrDownload = React.forwardRef((props, ref: any) => {
   const saved: any = localStorage.getItem("currentRouteDetails");
   const arrivalData: any = localStorage.getItem("arrivingRouteDetails");
+  const userDetail: any = localStorage.getItem("userDetail");
+const userId :any =  JSON.parse(arrivalData);
   const arrivalPoint: any = JSON.parse(arrivalData);
 
   const initialValue = JSON.parse(saved);
   const journeyId = uniqid()
   const { startDateTime } = initialValue.legs[0]
   const { arrivalDateTime, fare, duration, legs } = initialValue
+  const navigate = useNavigate();
+  const location = useLocation();
   const mapLegValue=(leg:any)=>{
 return initialValue.legs.map((val: any) => {
   return {
@@ -25,6 +32,7 @@ return initialValue.legs.map((val: any) => {
 })
   }
   React.useEffect(() => {
+console.log(userDetail);
 
     let Arrival:any;
     if (initialValue) {
@@ -33,21 +41,39 @@ return initialValue.legs.map((val: any) => {
         arrivalpoint: '',
         startTime: arrivalPoint.startDateTime,
         endTime: arrivalPoint.duration,
-        cost: arrivalPoint.fare,
+        cost: arrivalPoint.fare.totalCost,
         journey_legs: mapLegValue(arrivalPoint.legs),
         }
       }
     
-      const Departure = {
-        departureTime: arrivalDateTime,
-        arrivalpoint: '',
-        startTime: startDateTime,
-        endTime: duration,
-        cost: fare,
-        journey_legs: mapLegValue(legs),
-
-      }
+      
+     
     }
+    let Departure:any;
+    Departure = {
+      departureTime: arrivalDateTime,
+      arrivalpoint: '',
+      startTime: startDateTime,
+      endTime: duration,
+      cost: fare.totalCost,
+      journey_legs: mapLegValue(legs),
+
+    }
+    const data ={
+      qrcode: '',
+      ref: journeyId,
+      Departure:Departure,
+      Arrival:Arrival,
+      user_id:'64f4cde14735b87654e9d92e'
+    }
+    axios.post('http://localhost:8080/api/journey', data)
+    .then(function (response) {
+      console.log(response);
+    
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }, [])
   return (
 
