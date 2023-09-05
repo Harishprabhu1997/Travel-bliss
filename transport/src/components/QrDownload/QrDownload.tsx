@@ -5,75 +5,104 @@ import uniqid from 'uniqid';
 import Ticket from '../CommonFile/Ticket'
 import './QrDownload.scss'
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-
+import { toPng } from 'html-to-image';
 const QrDownload = React.forwardRef((props, ref: any) => {
+  const refd = React.useRef<HTMLDivElement>(null)
+
   const saved: any = localStorage.getItem("currentRouteDetails");
   const arrivalData: any = localStorage.getItem("arrivingRouteDetails");
   const userDetail: any = localStorage.getItem("userDetail");
-const userId :any =  JSON.parse(arrivalData);
+  const userId: any = JSON.parse(userDetail);
   const arrivalPoint: any = JSON.parse(arrivalData);
-
+  const fromTo: any = localStorage.getItem("fromTo");
+  const fromToObj = JSON.parse(fromTo)
   const initialValue = JSON.parse(saved);
   const journeyId = uniqid()
-  const { startDateTime } = initialValue.legs[0]
-  const { arrivalDateTime, fare, duration, legs } = initialValue
-  const navigate = useNavigate();
-  const location = useLocation();
-  const mapLegValue=(leg:any)=>{
-return initialValue.legs.map((val: any) => {
-  return {
-    details: val.instruction.detailed,
-    departurePoint: val.departurePoint.commonName,
-    scheduledTime: val.scheduledDepartureTime,
-    duration: val.duration,
-    mode: val.mode.id
-  }
-})
+  const { arrivalDateTime,startDateTime, fare, duration, legs } = initialValue
+  const mapLegValue = (leg: any) => {
+    return initialValue.legs.map((val: any) => {
+      
+      return {
+        details: val.instruction.detailed,
+        departurePoint: val.departurePoint.commonName,
+        scheduledTime: val.scheduledDepartureTime,
+        duration: val.duration,
+        mode: val.mode.id,
+        name :val.arrivalPoint.commonName,
+        details1 :val.instruction.detailed,
+        scheduledTime1 :val.scheduledArrivalTime
+      }
+    })
   }
   React.useEffect(() => {
-console.log(userDetail);
-
-    let Arrival:any;
+    
+   
+    const convertImg =async ()=>{
+      let qrLink;
+      if (refd.current === null) {
+        return
+      }
+await  toPng(refd.current, { cacheBust: true, })
+.then((dataUrl:any) => {
+  qrLink = dataUrl;
+  console.log(dataUrl);
+  let Arrival: any;
     if (initialValue) {
-      if(arrivalPoint){
-        Arrival={  departureTime: arrivalPoint.arrivalDateTime,
-        arrivalpoint: '',
-        startTime: arrivalPoint.startDateTime,
-        endTime: arrivalPoint.duration,
-        cost: arrivalPoint.fare.totalCost,
-        journey_legs: mapLegValue(arrivalPoint.legs),
+      if (arrivalPoint) {
+        Arrival = {
+          departureTime: arrivalPoint.arrivalDateTime,
+          arrivalpoint: {
+            from: fromToObj.to,
+            to: fromToObj.from,
+            startTime:arrivalPoint.startDateTime
+          },
+          startTime: arrivalPoint.startDateTime,
+          endTime: arrivalPoint.duration,
+          cost: arrivalPoint.fare.totalCost,
+          journey_legs: mapLegValue(arrivalPoint.legs),
         }
       }
-    
-      
-     
+
+
+
     }
-    let Departure:any;
+    let Departure: any;
+    
     Departure = {
       departureTime: arrivalDateTime,
-      arrivalpoint: '',
+      arrivalpoint: {
+        from: fromToObj.from,
+        to: fromToObj.to,
+        startTime:startDateTime
+      },
       startTime: startDateTime,
       endTime: duration,
       cost: fare.totalCost,
       journey_legs: mapLegValue(legs),
 
     }
-    const data ={
-      qrcode: '',
+    const data = {
+      qrcode: qrLink,
       ref: journeyId,
-      Departure:Departure,
-      Arrival:Arrival,
-      user_id:'64f4cde14735b87654e9d92e'
+      Departure: Departure,
+      Arrival: Arrival,
+      user_id: userId
     }
     axios.post('http://localhost:8080/api/journey', data)
-    .then(function (response) {
-      console.log(response);
+      .then(function (response) {
+        // localStorage.removeItem('fromTo');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  
+})
+.catch((err:any) => {
+  console.log(err)
+})
+    }
+    convertImg()
   }, [])
   return (
 
@@ -114,7 +143,11 @@ console.log(userDetail);
               </>
             </Grid>
             <Grid item xs={4}>
-              <QRCode value={journeyId} className='qrcode' />
+              <div  ref={refd} className='qrcode' >
+              <QRCode value={journeyId} 
+              
+               id='qrcode' />
+               </div>
               <Typography variant="body2" display="block" gutterBottom>
                 Ref: {journeyId}
               </Typography>

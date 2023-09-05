@@ -1,5 +1,5 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { Button, Card, Snackbar, CardContent, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField, Typography, Alert } from '@mui/material'
+import { Button, Card,FormHelperText, Snackbar, CardContent, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField, Typography, Alert } from '@mui/material'
 import React from 'react'
 import './Login.scss';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -11,6 +11,13 @@ function LogIn() {
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
 const [loginState,setLoginState] = React.useState(loginVal)
+const [errorRes, setErrorRes] = React.useState(
+  {
+    error:false,
+    message:''
+  }
+);
+
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
@@ -21,22 +28,19 @@ const [loginState,setLoginState] = React.useState(loginVal)
     handleClick()
   }, [])
   const login = () => {
-    // loginValid(loginState,setLoginState)
-    // navigate('/Plan_a_journey')
     axios.post('http://localhost:8080/api/auth/login', {
       username:loginState.userName,
       password:loginState.password
     }) 
-    // .then((response:any) => response.json())
     .then(function (response:any) {
-      console.log(response.data.id);
-      // cookies.set("userId", response.data.id, { sameSite: "none", secure: true });
       localStorage.setItem("userDetail", JSON.stringify(response.data.id))
 
       navigate('/Plan_a_journey')
     })
     .catch(function (error) {
       console.log(error);
+      setErrorRes({...errorRes,message:error.message,error:true})
+
     });
   }
   const handleClick = () => {
@@ -106,7 +110,13 @@ const [loginState,setLoginState] = React.useState(loginVal)
               >
                 Create account now
               </Link></Typography>
-
+<div>
+{errorRes.error ?
+                                            <FormHelperText error id="accountId-error">
+                                               {errorRes.message}
+                                            </FormHelperText> : ''
+                                        }
+</div>
             </div>
           </div>
         </CardContent>

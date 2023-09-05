@@ -4,7 +4,9 @@ import moment from 'moment'
 import RouteDetails from '../RouteDetails/RouteDetails'
 
 function Ticket(props: any) {
-    const { startDateTime, arrivalDateTime, fare, duration, legs } = props;
+    console.log(props,'tick');
+    
+    const { startDateTime, arrivalDateTime, fare, duration, legs,showRes } = props;
 
     return (
         <div>
@@ -20,10 +22,16 @@ function Ticket(props: any) {
 
             </Typography>
             <div>
-                {fare.totalCost ?
+              { !showRes && fare.totalCost ?
                     <Typography
                     >
                         Total cost : £{`${fare.totalCost / 100}`}
+                    </Typography> :
+                    <></>}
+                      { showRes && fare ?
+                    <Typography
+                    >
+                        Total cost : £{`${fare / 100}`}
                     </Typography> :
                     <></>}
             </div>
@@ -31,7 +39,7 @@ function Ticket(props: any) {
             >
                 Duration : {`${(Math.floor(duration / 60) ? `${Math.floor(duration / 60)}hrs` : '')} ${duration % 60}mins`}
             </Typography>
-            <RouteDetails routedetail={legs} />
+            <RouteDetails routedetail={legs} showRes={showRes} />
         </div>
     )
 }

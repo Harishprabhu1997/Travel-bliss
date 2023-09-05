@@ -77,7 +77,6 @@ function RouteList() {
         setExpanded(false);
       })
   }
-console.log(routeListState,'routeListState');
 
   return (
     <div id="RouteList">
