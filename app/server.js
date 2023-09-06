@@ -54,6 +54,7 @@ db.mongoose
 
 require("./routes/auth.routes")(app);
 require("./routes/journey.routes")(app);
+require("./routes/feedback.routes")(app);
 // set port, listen for requests
 const PORT = 8080;
 

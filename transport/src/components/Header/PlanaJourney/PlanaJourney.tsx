@@ -16,6 +16,10 @@ import { useNavigate,useLocation } from 'react-router-dom';
 
 function PlanaJourney() {
 const loc = useLocation();
+React.useEffect(()=>{
+   localStorage.removeItem('currentRouteDetails');
+   localStorage.removeItem('arrivingRouteDetails');
+},[])
   const [data, setValue] = React.useState({
     from: {},
     fromFullData: [],
@@ -61,6 +65,10 @@ const loc = useLocation();
           }
         })
       })
+      localStorage.setItem('fromTo', JSON.stringify({
+        from:data.from,
+        to:data.to
+      }));
   }
   return (
     <div id='PlanaJourney'>

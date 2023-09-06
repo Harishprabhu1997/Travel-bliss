@@ -11,9 +11,9 @@ import "./RouteList.scss"
 import RouteDetails from "../../RouteDetails/RouteDetails";
 import { matchDate } from '../../CommonFile/CommonFile'
 import { Box, Button, Grid, Paper } from '@mui/material';
-import { PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import Map from '../../Map/Map'
-import { base_url, primary_key } from '../../Api';
+import { base_url, initialOptions, paypal_client_id, primary_key } from '../../Api';
 function RouteList() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -77,7 +77,6 @@ function RouteList() {
         setExpanded(false);
       })
   }
-console.log(routeListState,'routeListState');
 
   return (
     <div id="RouteList">
@@ -127,9 +126,12 @@ console.log(routeListState,'routeListState');
                         >
                           continue
                         </Button> :
+                         <PayPalScriptProvider 
+                         options={{ clientId: paypal_client_id}}>
                           <PayPalButtons
                             onApprove={onApprove}
                             style={{ layout: "horizontal" }} />
+                            </PayPalScriptProvider>
                         }
                       </div>
                       :

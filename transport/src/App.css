@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+/* iframe
+{
+    display: none;
+} */
 #myVideo {
   position: fixed;
   right: 0;

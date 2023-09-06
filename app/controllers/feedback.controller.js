@@ -16,13 +16,8 @@ exports.get = (req, res) => {
 
 // Retrieve data from id from the database .
 exports.getById = (req, res) => {
-  if (!ObjectId.isValid({user_id:req.params.id})) {
-    return res.status(400).json({
-      error: "Given object id is not valid.",
-    });
-  }
   feedbackDb
-    .findById(req.params.id)
+    .find({user_id:req.params.id})
     .then((data) => {
       if (data) {
         return res.send(data);

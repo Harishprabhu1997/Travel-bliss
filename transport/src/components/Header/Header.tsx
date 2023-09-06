@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 import './HeaderStyle.scss'
-const pages = ['Plan a journey', 'Air quality', 'Feedback'];
+const pages = ['Plan a journey', 'Air quality', 'Feedback','Journey Results','View feedback'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
@@ -29,14 +29,22 @@ function Header() {
   };
 
   const handleCloseNavMenu = (e: any) => {
-    if (e.target.name === 'Feedback') {
+    const {name } = e.target
+    if (name === 'Feedback') {
       navigate('Complaints')
     }
-    else if (e.target.name === 'Plan a journey') {
+    else if(name ==='View feedback'){
+      navigate('View_feedback')
+    }
+    else if (name === 'Plan a journey') {
       navigate('Plan_a_journey')
     }
-    else if (e.target.name === 'Air quality') {
+    else if (name === 'Air quality') {
       navigate('Air_quality')
+    }
+    else if(name ==='Journey Results'){
+      navigate('Journey_Results')
+
     }
 
     setAnchorElNav(null);
@@ -45,6 +53,7 @@ function Header() {
   const handleCloseUserMenu = (res: any) => {
     console.log(res);
     if (res === 'Logout') {
+      localStorage.clear()
       navigate('/')
     }
     setAnchorElUser(null);

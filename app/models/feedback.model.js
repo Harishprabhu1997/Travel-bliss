@@ -1,13 +1,13 @@
 module.exports = (mongoose) => {
   let schema = mongoose.Schema(
     {
-      journey: {
+      headings: {
         type: String,
       },
       user_id: {
         type: String,
       },
-      Departure: {
+      details: {
         type: String,
       },
     },

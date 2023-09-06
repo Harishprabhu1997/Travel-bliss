@@ -28,6 +28,9 @@ const ModeSelection = (props: any) => {
   else if (mode === 'end') {
     modeType = <CircleIcon fontSize='small' />
   }
+  else if(!mode){
+    modeType =<TimelineConnector/>
+  }
   else {
     modeType = <TimelineConnector />
 
@@ -45,7 +48,7 @@ const PointsList = (props: any) => {
     <TimelineItem>
       <TimelineSeparator>
         <ModeSelection mode={mode} />
-        {mode === 'end' ? <></> : <TimelineConnector />}
+        {mode === 'end' ||!mode ? <></> : <TimelineConnector />}
 
       </TimelineSeparator>
       <TimelineContent>{`${name} at ${moment(scheduledTime).format('hh:mm a')}`}
@@ -60,25 +63,42 @@ const PointsList = (props: any) => {
 }
 
 export default function RouteDetails(props: any) {
-  const { routedetail } = props
+  console.log(props);
+
+  const { routedetail, showRes } = props
   return (
     <Timeline>
       {routedetail.map((point: any, index: any) => (
         <>
-          <PointsList
-            name={_.get(point, 'departurePoint.commonName')}
-            details={_.get(point, 'instruction.detailed')}
-            scheduledTime={_.get(point, 'scheduledDepartureTime')}
-            duration={_.get(point, 'duration')}
-            mode={_.get(point, 'mode.id')}
-          />
-          {routedetail.length === (index + 1) ?
+          {showRes ?
             <PointsList
+              name={_.get(point, 'departurePoint')}
+              details={_.get(point, 'details')}
+              scheduledTime={_.get(point, 'scheduledTime')}
+              duration={_.get(point, 'duration')}
+              mode={_.get(point, 'mode.id')}
+            /> :
+            <PointsList
+              name={_.get(point, 'departurePoint.commonName')}
+              details={_.get(point, 'instruction.detailed')}
+              scheduledTime={_.get(point, 'scheduledDepartureTime')}
+              duration={_.get(point, 'duration')}
+              mode={_.get(point, 'mode.id')}
+            />
+          }
+          {routedetail.length === (index + 1) ? <>
+            {showRes ? <PointsList
+              name={_.get(point, 'name')}
+              details={_.get(point, 'details1')}
+              scheduledTime={_.get(point, 'scheduledTime1')}
+              mode='end'
+            /> : <PointsList
               name={_.get(point, 'arrivalPoint.commonName')}
               details={_.get(point, 'instruction.detailed')}
               scheduledTime={_.get(point, 'scheduledArrivalTime')}
               mode='end'
-            /> : ''
+            />}
+          </> : ''
           }
 
         </>

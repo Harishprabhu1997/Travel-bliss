@@ -6,8 +6,7 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import './PrintPdf.scss'
 
 function PrintPdf() {
-  const componentRef = useRef<HTMLElement | null>(null);;
-  console.log(componentRef.current);
+  const componentRef = useRef<HTMLElement | null>(null);
 
   return (
     <div id='PrintPdf'>
