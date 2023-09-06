@@ -1,10 +1,10 @@
 const db = require("../models");
-const profileDb = db.journey;
+const journey = db.journey;
 const ObjectId = require("mongoose").Types.ObjectId;
 
 // Retrieve all data from the database.
 exports.get = (req, res) => {
-  profileDb
+  journey
     .find()
     .then((data) => res.send(data))
     .catch((err) => {
@@ -21,8 +21,8 @@ exports.getById = (req, res) => {
   //     error: "Given object id is not valid.",
   //   });
   // }
-  profileDb
-    .findById({user_id:req.params.id})
+  journey
+    .find({user_id:req.params.id})
     .then((data) => {
       if (data) {
         return res.send(data);
@@ -42,7 +42,7 @@ exports.getById = (req, res) => {
 // Post data to the database.
 
 exports.adddata = (req, res) => {
-  profileDb
+  journey
     .create(req.body)
     .then((data) => res.status(201).json(data))
     .catch((err) => {
@@ -54,7 +54,7 @@ exports.adddata = (req, res) => {
 
 // Update the data in database.
 exports.updatedata = (req, res) => {
-  profileDb
+  journey
     .findByIdAndUpdate(req.params.id, req.body)
     .then((data) => {
       if (data) res.send(data);
@@ -72,7 +72,7 @@ exports.updatedata = (req, res) => {
 
 //delete the data in database.
 exports.removedata = (req, res) => {
-  profileDb
+  journey
 
     .findByIdAndDelete(req.params.id)
     .then((data) => {

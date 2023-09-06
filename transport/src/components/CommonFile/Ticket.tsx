@@ -4,7 +4,6 @@ import moment from 'moment'
 import RouteDetails from '../RouteDetails/RouteDetails'
 
 function Ticket(props: any) {
-    console.log(props,'tick');
     
     const { startDateTime, arrivalDateTime, fare, duration, legs,showRes } = props;
 

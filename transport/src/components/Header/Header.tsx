@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 import './HeaderStyle.scss'
-const pages = ['Plan a journey', 'Air quality', 'Feedback','Journey Results'];
+const pages = ['Plan a journey', 'Air quality', 'Feedback','Journey Results','View feedback'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
@@ -32,6 +32,9 @@ function Header() {
     const {name } = e.target
     if (name === 'Feedback') {
       navigate('Complaints')
+    }
+    else if(name ==='View feedback'){
+      navigate('View_feedback')
     }
     else if (name === 'Plan a journey') {
       navigate('Plan_a_journey')

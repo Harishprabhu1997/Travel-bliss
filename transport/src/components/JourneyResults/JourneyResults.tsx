@@ -51,7 +51,7 @@ function JourneyResults() {
             >
 
               <Typography marginTop={'7px'}>
-                From : {res.Departure.arrivalpoint.from.label}   </Typography>
+            {ind+1}.    From : {res.Departure.arrivalpoint.from.label}   </Typography>
               <Typography marginTop={'7px'} marginLeft={'10px'}>
                 To : {res.Departure.arrivalpoint.to.label}   </Typography>
               {res.Arrival ? <> <Typography marginTop={'7px'}>

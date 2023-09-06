@@ -16,23 +16,26 @@ import Registration from './components/Registration/Registration'
 import axios from 'axios';
 import JourneyResults from './components/JourneyResults/JourneyResults';
 import { ErrorBoundary } from 'react-error-boundary'
-import MyFallbackComponent from './components/ErrorFallback/ErrorFallback'
+import MyFallbackComponent from './components/ErrorFallback/ErrorFallback';
+import FeedBackList from './components/FeedBackList/FeedBackList'
 function App() {
   const location = useLocation();
 const navigate = useNavigate()
   return (
-    <ErrorBoundary
+    
+    <div className="App">
+    
+    
+     
+      <ErrorBoundary
     FallbackComponent={MyFallbackComponent}
   >
-    <div className="App">
-     
-    
-      <PayPalScriptProvider options={initialOptions}>
+     <PayPalScriptProvider options={initialOptions}>
         <video autoPlay muted loop id="myVideo">
           <source src='/video/london_bus.mp4' type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
-        {location.pathname==='/'?'':<Header />}
+        {location.pathname==='/' ||location.pathname==='/Register'?'':<Header />}
         
         <Routes>
           <Route path="/journey_result" element={<RouteList />} />
@@ -40,18 +43,19 @@ const navigate = useNavigate()
           <Route path="" element={<LogIn />} />
           <Route path="/Register" element={<Registration />} />
           <Route path="/Journey_Results" element={<JourneyResults />} />
+          <Route path="/View_feedback" element={<FeedBackList />} />
 
           <Route path="/Plan_a_journey" element={<PlanaJourney />} />
           <Route path='/Complaints' element={<Complaints />} />
           <Route path='/Air_quality' element={<AirQuality />} />
         </Routes>
 
-      </PayPalScriptProvider>
-
+      
+        </PayPalScriptProvider>
      
+    </ErrorBoundary>
 
     </div>
-    </ErrorBoundary>
   )
 }
 
